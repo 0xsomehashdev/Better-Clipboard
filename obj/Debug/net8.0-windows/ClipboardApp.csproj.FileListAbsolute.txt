@@ -18,5 +18,5 @@ C:\Projects\BetterClipboard\obj\Debug\net8.0-windows\refint\ClipboardApp.dll
 C:\Projects\BetterClipboard\obj\Debug\net8.0-windows\ClipboardApp.pdb
 C:\Projects\BetterClipboard\obj\Debug\net8.0-windows\ClipboardApp.genruntimeconfig.cache
 C:\Projects\BetterClipboard\obj\Debug\net8.0-windows\ref\ClipboardApp.dll
-C:\Projects\BetterClipboard\bin\Debug\net8.0-windows\betterclipboarlogo.jpg
-C:\Projects\BetterClipboard\bin\Debug\net8.0-windows\betterclipboarlogo.ico
+C:\Projects\BetterClipboard\obj\Debug\net8.0-windows\ClipboardApp.sourcelink.json
+C:\Projects\BetterClipboard\bin\Debug\net8.0-windows\betterclipboarlogo.png

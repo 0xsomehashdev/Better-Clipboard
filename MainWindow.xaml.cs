@@ -71,30 +71,38 @@ namespace ClipboardApp
             InitializeComponent();
             DataContext = this;
 
-            // Setup tray icon with context menu
-            _trayIcon = new NotifyIcon
+            try
             {
-                Icon = LoadEmbeddedIcon(),
-                Text = "Enhanced Clipboard",
-                Visible = true
-            };
-            _trayIcon.Click += (sender, args) => ShowWindow();
+                // Setup tray icon with context menu
+                _trayIcon = new NotifyIcon
+                {
+                    Icon = LoadEmbeddedIcon(),
+                    Text = "Enhanced Clipboard",
+                    Visible = true
+                };
+                _trayIcon.Click += (sender, args) => ShowWindow();
 
-            // Context menu for Exit
-            var contextMenu = new ContextMenuStrip();
-            contextMenu.Items.Add("Exit", null, (s, e) => System.Windows.Application.Current.Shutdown());
-            _trayIcon.ContextMenuStrip = contextMenu;
+                // Context menu for Exit
+                var contextMenu = new ContextMenuStrip();
+                contextMenu.Items.Add("Exit", null, (s, e) => System.Windows.Application.Current.Shutdown());
+                _trayIcon.ContextMenuStrip = contextMenu;
 
-            // Start minimized to tray
-            this.WindowState = WindowState.Minimized;
-            this.ShowInTaskbar = false;
-            this.Hide();
+                // Start minimized to tray
+                this.WindowState = WindowState.Minimized;
+                this.ShowInTaskbar = false;
+                this.Hide();
 
-            // Events
-            this.Deactivated += (sender, args) => this.Hide();
-            this.Closing += MainWindow_Closing;
+                // Events
+                this.Deactivated += (sender, args) => this.Hide();
+                this.Closing += MainWindow_Closing;
 
-            Log("Application started.");
+                Log("Application started.");
+            }
+            catch (Exception ex)
+            {
+                Log($"Constructor error: {ex}");
+                System.Windows.MessageBox.Show($"Startup error: {ex.Message}");
+            }
         }
 
         private System.Drawing.Icon LoadEmbeddedIcon()
@@ -156,32 +164,50 @@ namespace ClipboardApp
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == 0x031D) // WM_CLIPBOARDUPDATE
+            try
             {
-                HandleClipboardChanged();
-                handled = true;
+                if (msg == 0x031D) // WM_CLIPBOARDUPDATE
+                {
+                    HandleClipboardChanged();
+                    handled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log($"WndProc error: {ex}");
             }
             return IntPtr.Zero;
         }
 
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
+            try
             {
-                int vkCode = Marshal.ReadInt32(lParam);
-                if (vkCode == VK_C && (GetAsyncKeyState(VK_CONTROL) < 0) && (GetAsyncKeyState(VK_MENU) < 0))
+                if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
                 {
-                    // Ctrl+Alt+C pressed
-                    var window = System.Windows.Application.Current.MainWindow as MainWindow;
-                    if (window != null)
+                    int vkCode = Marshal.ReadInt32(lParam);
+                    if (vkCode == VK_C && (GetAsyncKeyState(VK_CONTROL) < 0) && (GetAsyncKeyState(VK_MENU) < 0))
                     {
-                        window.Dispatcher.Invoke(() =>
+                        // Ctrl+Alt+C pressed
+                        var window = System.Windows.Application.Current.MainWindow as MainWindow;
+                        if (window != null)
                         {
-                            window.Log("Hotkey Ctrl+Alt+C triggered via hook!");
-                            window.ShowWindow();
-                        });
+                            window.Dispatcher.Invoke(() =>
+                            {
+                                window.Log("Hotkey Ctrl+Alt+C triggered via hook!");
+                                window.ShowWindow();
+                            });
+                        }
+                        return (IntPtr)1; // Suppress further processing if needed (optional)
                     }
-                    return (IntPtr)1; // Suppress further processing if needed (optional)
+                }
+            }
+            catch (Exception ex)
+            {
+                var window = System.Windows.Application.Current.MainWindow as MainWindow;
+                if (window != null)
+                {
+                    window.Log($"HookCallback error: {ex}");
                 }
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
@@ -189,59 +215,73 @@ namespace ClipboardApp
 
         private void ShowWindow()
         {
-            Log("ShowWindow called!");
-            if (!this.IsVisible)
+            try
             {
-                this.Show();
+                Log("ShowWindow called!");
+                if (!this.IsVisible)
+                {
+                    this.Show();
+                }
+                if (this.WindowState == WindowState.Minimized)
+                {
+                    this.WindowState = WindowState.Normal;
+                }
+                var workArea = SystemParameters.WorkArea;
+                this.Left = workArea.Right - this.Width;
+                this.Top = workArea.Bottom - this.Height;
+                this.Topmost = true;
+                SetForegroundWindow(_handle); // Принудительный фокус на окно
+                this.Activate();
+                this.Focus();
+                ClipboardListView.Focus();
+                if (History.Count > 0)
+                {
+                    ClipboardListView.SelectedIndex = 0; // Выбор первого элемента для немедленной навигации стрелками
+                }
+                Log("Window focused and first item selected.");
             }
-            if (this.WindowState == WindowState.Minimized)
+            catch (Exception ex)
             {
-                this.WindowState = WindowState.Normal;
+                Log($"ShowWindow error: {ex}");
             }
-            var workArea = SystemParameters.WorkArea;
-            this.Left = workArea.Right - this.Width;
-            this.Top = workArea.Bottom - this.Height;
-            this.Topmost = true;
-            SetForegroundWindow(_handle); // Принудительный фокус на окно
-            this.Activate();
-            this.Focus();
-            ClipboardListView.Focus();
-            if (History.Count > 0)
-            {
-                ClipboardListView.SelectedIndex = 0; // Выбор первого элемента для немедленной навигации стрелками
-            }
-            Log("Window focused and first item selected.");
         }
 
         private void HandleClipboardChanged()
         {
-            if (System.Windows.Clipboard.ContainsText())
+            try
             {
-                string text = System.Windows.Clipboard.GetText();
-                if (!string.IsNullOrEmpty(text) && (History.Count == 0 || !(History[0] is string lastText && lastText == text)))
+                if (System.Windows.Clipboard.ContainsText())
                 {
-                    History.Insert(0, text);
-                }
-            }
-            else if (System.Windows.Clipboard.ContainsImage())
-            {
-                var bitmapSource = System.Windows.Clipboard.GetImage();
-                if (bitmapSource != null)
-                {
-                    BitmapImage bitmapImage = ConvertBitmapSourceToBitmapImage(bitmapSource);
-                    if (bitmapImage != null)
+                    string text = System.Windows.Clipboard.GetText();
+                    if (!string.IsNullOrEmpty(text) && (History.Count == 0 || !(History[0] is string lastText && lastText == text)))
                     {
-                        if (History.Count == 0 || !(History[0] is BitmapImage))
+                        History.Insert(0, text);
+                    }
+                }
+                else if (System.Windows.Clipboard.ContainsImage())
+                {
+                    var bitmapSource = System.Windows.Clipboard.GetImage();
+                    if (bitmapSource != null)
+                    {
+                        BitmapImage bitmapImage = ConvertBitmapSourceToBitmapImage(bitmapSource);
+                        if (bitmapImage != null)
                         {
-                            History.Insert(0, bitmapImage);
+                            if (History.Count == 0 || !(History[0] is BitmapImage))
+                            {
+                                History.Insert(0, bitmapImage);
+                            }
                         }
                     }
                 }
-            }
 
-            while (History.Count > 50)
+                while (History.Count > 30)
+                {
+                    History.RemoveAt(History.Count - 1);
+                }
+            }
+            catch (Exception ex)
             {
-                History.RemoveAt(History.Count - 1);
+                Log($"HandleClipboardChanged error: {ex}");
             }
         }
 
@@ -274,67 +314,81 @@ namespace ClipboardApp
 
         private void PasteSelected()
         {
-            var selectedItems = ClipboardListView.SelectedItems;
-            if (selectedItems.Count == 0) 
+            try
             {
-                Log("No items selected for paste.");
-                return;
-            }
-
-            List<string> texts = new List<string>();
-            List<BitmapImage> images = new List<BitmapImage>();
-
-            foreach (var item in selectedItems)
-            {
-                if (item is string text)
+                var selectedItems = ClipboardListView.SelectedItems;
+                if (selectedItems.Count == 0) 
                 {
-                    texts.Add(text);
+                    Log("No items selected for paste.");
+                    return;
                 }
-                else if (item is BitmapImage image)
+
+                List<string> texts = new List<string>();
+                List<BitmapImage> images = new List<BitmapImage>();
+
+                foreach (var item in selectedItems)
                 {
-                    images.Add(image);
+                    if (item is string text)
+                    {
+                        texts.Add(text);
+                    }
+                    else if (item is BitmapImage image)
+                    {
+                        images.Add(image);
+                    }
+                }
+
+                if (images.Count > 1 || (images.Count == 1 && texts.Count > 0))
+                {
+                    System.Windows.MessageBox.Show("Cannot paste multiple images or mixed text/images.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Log("Paste error: invalid selection.");
+                    return;
+                }
+
+                if (images.Count == 1)
+                {
+                    System.Windows.Clipboard.SetImage(images[0]);
+                    Log("Pasted image.");
+                }
+                else if (texts.Count > 0)
+                {
+                    string joinedText = string.Join(" ", texts);
+                    System.Windows.Clipboard.SetText(joinedText);
+                    Log("Pasted text: " + joinedText);
                 }
             }
-
-            if (images.Count > 1 || (images.Count == 1 && texts.Count > 0))
+            catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Cannot paste multiple images or mixed text/images.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Log("Paste error: invalid selection.");
-                return;
-            }
-
-            if (images.Count == 1)
-            {
-                System.Windows.Clipboard.SetImage(images[0]);
-                Log("Pasted image.");
-            }
-            else if (texts.Count > 0)
-            {
-                string joinedText = string.Join(" ", texts);
-                System.Windows.Clipboard.SetText(joinedText);
-                Log("Pasted text: " + joinedText);
+                Log($"PasteSelected error: {ex}");
             }
         }
 
         private void ClipboardListView_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Escape)
+            try
             {
-                this.Hide();
-                e.Handled = true;
+                if (e.Key == System.Windows.Input.Key.Escape)
+                {
+                    this.Hide();
+                    e.Handled = true;
+                }
+                else if (e.Key == System.Windows.Input.Key.Enter)
+                {
+                    PasteSelected();
+                    this.Hide();
+                    Thread.Sleep(100); // Короткая пауза, чтобы фокус вернулся к предыдущему окну
+                    // Simulate Ctrl+V to auto-paste
+                    keybd_event(VK_CONTROL, 0, 0, 0); // Ctrl down
+                    keybd_event(VK_V, 0, 0, 0); // V down
+                    keybd_event(VK_V, 0, KEYEVENTF_KEYUP, 0); // V up
+                    keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0); // Ctrl up
+                    Log("Simulated Ctrl+V after hide.");
+                    e.Handled = true;
+                }
             }
-            else if (e.Key == System.Windows.Input.Key.Enter)
+            catch (Exception ex)
             {
-                PasteSelected();
-                this.Hide();
-                Thread.Sleep(100); // Короткая пауза, чтобы фокус вернулся к предыдущему окну
-                // Simulate Ctrl+V to auto-paste
-                keybd_event(VK_CONTROL, 0, 0, 0); // Ctrl down
-                keybd_event(VK_V, 0, 0, 0); // V down
-                keybd_event(VK_V, 0, KEYEVENTF_KEYUP, 0); // V up
-                keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0); // Ctrl up
-                Log("Simulated Ctrl+V after hide.");
-                e.Handled = true;
+                Log($"PreviewKeyDown error: {ex}");
             }
         }
 
@@ -350,7 +404,7 @@ namespace ClipboardApp
             {
                 File.AppendAllText(_logPath, $"{DateTime.Now}: {message}\n");
             }
-            catch { /* Ignore log errors */ }
+            catch { /* Silent fail */ }
         }
     }
 }

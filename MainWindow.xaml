@@ -8,33 +8,70 @@
         xmlns:imaging="clr-namespace:System.Windows.Media.Imaging;assembly=PresentationCore"
         mc:Ignorable="d"
         Title="Enhanced Clipboard" Height="400" Width="400"
-        WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="White"
+        WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="#151B23"
         Topmost="True" ShowInTaskbar="False">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        <!-- Header with title -->
-        <TextBlock Grid.Row="0" Text="Better Clipboard V 1.0.0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,10,0,10"/>
-        <Separator Grid.Row="0" VerticalAlignment="Bottom" Margin="0,0,0,0" Height="1" Background="Black"/>
-        
-        <!-- Clipboard list -->
-        <ListView Grid.Row="1" x:Name="ClipboardListView" ItemsSource="{Binding History}" SelectionMode="Extended" PreviewKeyDown="ClipboardListView_PreviewKeyDown">
-            <ListView.Resources>
-                <DataTemplate DataType="{x:Type sys:String}">
-                    <TextBlock Text="{Binding}" TextWrapping="Wrap" MaxWidth="380" Margin="5"/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type imaging:BitmapImage}">
-                    <Image Source="{Binding}" Stretch="Uniform" Width="100" Height="100" Margin="5"/>
-                </DataTemplate>
-            </ListView.Resources>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
-    </Grid>
+    <Border BorderBrush="#A0A7B0" BorderThickness="1" CornerRadius="10" Background="#151B23">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Header with title -->
+            <TextBlock Grid.Row="0" Text="Better Clipboard V 1.0.1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="SemiBold" Foreground="#B7BDC6" Margin="0,10,0,10"/>
+            <Separator Grid.Row="0" VerticalAlignment="Bottom" Margin="0,0,0,0" Height="1" Background="#A0A7B0"/>
+            
+            <!-- Clipboard list -->
+            <ListView Grid.Row="1" x:Name="ClipboardListView" ItemsSource="{Binding History}" SelectionMode="Extended" PreviewKeyDown="ClipboardListView_PreviewKeyDown" Background="#151B23" BorderBrush="Transparent"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <ListView.Resources>
+                    <!-- Override system highlight colors as fallback -->
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#B7BDC6"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#B7BDC6"/>
+                    
+                    <DataTemplate DataType="{x:Type sys:String}">
+                        <Border x:Name="ItemBorder" BorderBrush="#A0A7B0" BorderThickness="1" CornerRadius="5" Margin="5" Padding="5" Background="#151B23">
+                            <TextBlock Text="{Binding}" TextWrapping="Wrap" MaxWidth="380" FontSize="14" FontWeight="SemiBold" Foreground="#B7BDC6"/>
+                        </Border>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=IsSelected}" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#080b0f"/>
+                                <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#ffffff"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type imaging:BitmapImage}">
+                        <Border x:Name="ItemBorder" BorderBrush="#A0A7B0" BorderThickness="1" CornerRadius="5" Margin="5" Padding="5" Background="#151B23">
+                            <Image Source="{Binding}" Stretch="Uniform" Width="100" Height="100"/>
+                        </Border>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=IsSelected}" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#080b0f"/>
+                                <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#ffffff"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ListView.Resources>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Grid>
+    </Border>
 </Window>

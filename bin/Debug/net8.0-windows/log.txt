@@ -1,0 +1,186 @@
+31.01.2026 17:05:43: Application started.
+31.01.2026 17:05:45: ShowWindow called!
+31.01.2026 17:05:46: Keyboard hook registered successfully.
+31.01.2026 17:05:46: Window focused and first item selected.
+31.01.2026 17:05:51: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:05:51: ShowWindow called!
+31.01.2026 17:05:51: Window focused and first item selected.
+31.01.2026 17:06:21: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:06:21: ShowWindow called!
+31.01.2026 17:06:21: Window focused and first item selected.
+31.01.2026 17:06:57: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:06:57: ShowWindow called!
+31.01.2026 17:06:57: Window focused and first item selected.
+31.01.2026 17:07:24: Pasted text: 25 24 23 22 21
+31.01.2026 17:07:24: Simulated Ctrl+V after hide.
+31.01.2026 17:07:24: HandleClipboardChanged error: System.Runtime.InteropServices.COMException (0x800401D0): Ошибка при вызове OpenClipboard (0x800401D0 (CLIPBRD_E_CANT_OPEN))
+   at System.Runtime.InteropServices.ComTypes.IDataObject.GetData(FORMATETC& format, STGMEDIUM& medium)
+   at System.Windows.DataObject.OleConverter.GetDataFromOleHGLOBAL(String format, DVASPECT aspect, Int32 index)
+   at System.Windows.Clipboard.GetText(TextDataFormat format)
+   at ClipboardApp.MainWindow.HandleClipboardChanged() in C:\Projects\BetterClipboard\MainWindow.xaml.cs:line 255
+31.01.2026 17:07:41: ShowWindow called!
+31.01.2026 17:07:41: Window focused and first item selected.
+31.01.2026 17:07:42: ShowWindow called!
+31.01.2026 17:07:42: Window focused and first item selected.
+31.01.2026 17:09:02: Application started.
+31.01.2026 17:09:21: ShowWindow called!
+31.01.2026 17:09:21: Keyboard hook registered successfully.
+31.01.2026 17:09:21: Window focused and first item selected.
+31.01.2026 17:09:31: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:09:31: ShowWindow called!
+31.01.2026 17:09:31: Window focused and first item selected.
+31.01.2026 17:09:59: ShowWindow called!
+31.01.2026 17:09:59: Window focused and first item selected.
+31.01.2026 17:10:00: ShowWindow called!
+31.01.2026 17:10:00: Window focused and first item selected.
+31.01.2026 17:18:29: Application started.
+31.01.2026 17:18:31: ShowWindow called!
+31.01.2026 17:18:31: Keyboard hook registered successfully.
+31.01.2026 17:18:31: Window focused and first item selected.
+31.01.2026 17:18:49: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:18:49: ShowWindow called!
+31.01.2026 17:18:49: Window focused and first item selected.
+31.01.2026 17:20:45: ShowWindow called!
+31.01.2026 17:20:45: Window focused and first item selected.
+31.01.2026 17:20:46: ShowWindow called!
+31.01.2026 17:20:46: Window focused and first item selected.
+31.01.2026 17:21:09: Application started.
+31.01.2026 17:21:09: ShowWindow called!
+31.01.2026 17:21:10: Keyboard hook registered successfully.
+31.01.2026 17:21:10: Window focused and first item selected.
+31.01.2026 17:21:17: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:21:17: ShowWindow called!
+31.01.2026 17:21:17: Window focused and first item selected.
+31.01.2026 17:24:44: ShowWindow called!
+31.01.2026 17:24:44: Window focused and first item selected.
+31.01.2026 17:24:44: ShowWindow called!
+31.01.2026 17:24:44: Window focused and first item selected.
+31.01.2026 17:25:57: Application started.
+31.01.2026 17:26:01: ShowWindow called!
+31.01.2026 17:26:01: Keyboard hook registered successfully.
+31.01.2026 17:26:01: Window focused and first item selected.
+31.01.2026 17:26:08: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:26:08: ShowWindow called!
+31.01.2026 17:26:08: Window focused and first item selected.
+31.01.2026 17:26:11: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:26:11: ShowWindow called!
+31.01.2026 17:26:11: Window focused and first item selected.
+31.01.2026 17:26:17: Pasted text: с
+31.01.2026 17:26:17: Simulated Ctrl+V after hide.
+31.01.2026 17:26:18: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:26:18: ShowWindow called!
+31.01.2026 17:26:18: Window focused and first item selected.
+31.01.2026 17:26:22: Pasted text: 1 2 4
+31.01.2026 17:26:22: Simulated Ctrl+V after hide.
+31.01.2026 17:26:44: ShowWindow called!
+31.01.2026 17:26:44: Window focused and first item selected.
+31.01.2026 17:26:47: ShowWindow called!
+31.01.2026 17:26:47: Window focused and first item selected.
+31.01.2026 17:26:48: ShowWindow called!
+31.01.2026 17:26:48: Window focused and first item selected.
+31.01.2026 17:26:48: ShowWindow called!
+31.01.2026 17:26:48: Window focused and first item selected.
+31.01.2026 17:27:41: Application started.
+31.01.2026 17:27:43: ShowWindow called!
+31.01.2026 17:27:43: Keyboard hook registered successfully.
+31.01.2026 17:27:43: Window focused and first item selected.
+31.01.2026 17:27:50: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:27:50: ShowWindow called!
+31.01.2026 17:27:50: Window focused and first item selected.
+31.01.2026 17:30:36: ShowWindow called!
+31.01.2026 17:30:36: Window focused and first item selected.
+31.01.2026 17:30:36: ShowWindow called!
+31.01.2026 17:30:36: Window focused and first item selected.
+31.01.2026 17:31:19: Application started.
+31.01.2026 17:31:35: ShowWindow called!
+31.01.2026 17:31:35: Keyboard hook registered successfully.
+31.01.2026 17:31:36: Window focused and first item selected.
+31.01.2026 17:31:44: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:31:44: ShowWindow called!
+31.01.2026 17:31:44: Window focused and first item selected.
+31.01.2026 17:34:12: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:34:12: ShowWindow called!
+31.01.2026 17:34:12: Window focused and first item selected.
+31.01.2026 17:34:47: ShowWindow called!
+31.01.2026 17:34:47: Window focused and first item selected.
+31.01.2026 17:34:48: ShowWindow called!
+31.01.2026 17:34:48: Window focused and first item selected.
+31.01.2026 17:34:59: Application started.
+31.01.2026 17:35:00: ShowWindow called!
+31.01.2026 17:35:00: Keyboard hook registered successfully.
+31.01.2026 17:35:00: Window focused and first item selected.
+31.01.2026 17:35:10: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:35:10: ShowWindow called!
+31.01.2026 17:35:10: Window focused and first item selected.
+31.01.2026 17:35:15: Pasted text: ш тьб одл ч
+31.01.2026 17:35:15: Simulated Ctrl+V after hide.
+31.01.2026 17:35:18: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:35:18: ShowWindow called!
+31.01.2026 17:35:18: Window focused and first item selected.
+31.01.2026 17:35:19: Pasted text: 1
+31.01.2026 17:35:19: Simulated Ctrl+V after hide.
+31.01.2026 17:35:40: ShowWindow called!
+31.01.2026 17:35:40: Window focused and first item selected.
+31.01.2026 17:35:40: ShowWindow called!
+31.01.2026 17:35:40: Window focused and first item selected.
+31.01.2026 17:36:34: Application started.
+31.01.2026 17:36:35: ShowWindow called!
+31.01.2026 17:36:35: Keyboard hook registered successfully.
+31.01.2026 17:36:35: Window focused and first item selected.
+31.01.2026 17:36:45: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:36:45: ShowWindow called!
+31.01.2026 17:36:45: Window focused and first item selected.
+31.01.2026 17:36:56: Pasted text: л д 8 9
+31.01.2026 17:36:56: Simulated Ctrl+V after hide.
+31.01.2026 17:37:51: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:37:51: ShowWindow called!
+31.01.2026 17:37:51: Window focused and first item selected.
+31.01.2026 17:38:01: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:38:01: ShowWindow called!
+31.01.2026 17:38:01: Window focused and first item selected.
+31.01.2026 17:39:12: ShowWindow called!
+31.01.2026 17:39:12: Window focused and first item selected.
+31.01.2026 17:39:13: ShowWindow called!
+31.01.2026 17:39:13: Window focused and first item selected.
+31.01.2026 17:50:31: Application started.
+31.01.2026 17:50:36: ShowWindow called!
+31.01.2026 17:50:36: Keyboard hook registered successfully.
+31.01.2026 17:50:36: Window focused and first item selected.
+31.01.2026 17:50:46: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:50:46: ShowWindow called!
+31.01.2026 17:50:46: Window focused and first item selected.
+31.01.2026 17:51:02: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:51:02: ShowWindow called!
+31.01.2026 17:51:02: Window focused and first item selected.
+31.01.2026 17:51:16: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:51:16: ShowWindow called!
+31.01.2026 17:51:16: Window focused and first item selected.
+31.01.2026 17:55:49: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:55:49: ShowWindow called!
+31.01.2026 17:55:49: Window focused and first item selected.
+31.01.2026 17:56:14: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:56:14: ShowWindow called!
+31.01.2026 17:56:14: Window focused and first item selected.
+31.01.2026 17:56:17: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:56:17: ShowWindow called!
+31.01.2026 17:56:17: Window focused and first item selected.
+31.01.2026 17:56:21: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:56:21: ShowWindow called!
+31.01.2026 17:56:21: Window focused and first item selected.
+31.01.2026 17:56:32: Pasted text: 665 1000 68 964 1000 44 33
+31.01.2026 17:56:32: Simulated Ctrl+V after hide.
+31.01.2026 17:56:40: Hotkey Ctrl+Alt+C triggered via hook!
+31.01.2026 17:56:40: ShowWindow called!
+31.01.2026 17:56:40: Window focused and first item selected.
+31.01.2026 17:56:59: ShowWindow called!
+31.01.2026 17:56:59: Window focused and first item selected.
+31.01.2026 17:57:02: ShowWindow called!
+31.01.2026 17:57:02: Window focused and first item selected.
+31.01.2026 17:57:57: Application started.
+31.01.2026 17:57:58: ShowWindow called!
+31.01.2026 17:57:58: Keyboard hook registered successfully.
+31.01.2026 17:57:59: Window focused and first item selected.
+31.01.2026 17:58:25: ShowWindow called!
+31.01.2026 17:58:25: Window focused and first item selected.
+31.01.2026 17:58:25: ShowWindow called!
+31.01.2026 17:58:25: Window focused and first item selected.
